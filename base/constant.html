@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>jikan4snek.base.constant API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>jikan4snek.base.constant</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import json
+from jikan4snek import __version__
+
+
+class Api:
+    def __init__(
+        self,
+        BASE_API=&#34;https://api.jikan.moe/v4&#34;,
+        BASE_STABLE_HIT=False,
+        BASE_CONSTANT_HIT=2,
+        BASE_SIMULATE_HIT=1.3,
+        BASE_EXPIRE_CACHE=60,
+        BASE_SQLITE_BACKEND=&#34;jikan4snek_cache/jikan4snek&#34;,
+        BASE_headers: dict = {
+            &#34;User-Agent&#34;: f&#34;jikan4snek/v{__version__} (https://pypi.org/project/jikan4snek);&#34;,
+            &#34;From&#34;: &#34;hey@scathach.id&#34;,
+        },
+        BASE_anime_valid_entries: tuple = (
+            &#34;full&#34;,
+            &#34;characters&#34;,
+            &#34;staff&#34;,
+            &#34;episodes&#34;,
+            &#34;news&#34;,
+            &#34;forum&#34;,
+            &#34;videos&#34;,
+            &#34;videos_episodes&#34;,
+            &#34;pictures&#34;,
+            &#34;statistics&#34;,
+            &#34;moreinfo&#34;,
+            &#34;recommendations&#34;,
+            &#34;userupdates&#34;,
+            &#34;reviews&#34;,
+            &#34;relations&#34;,
+            &#34;themes&#34;,
+            &#34;external&#34;,
+            &#34;streaming&#34;,
+        ),
+        BASE_manga_valid_entries: tuple = (
+            &#34;full&#34;,
+            &#34;characters&#34;,
+            &#34;news&#34;,
+            &#34;forum&#34;,
+            &#34;pictures&#34;,
+            &#34;statistics&#34;,
+            &#34;moreinfo&#34;,
+            &#34;recommendations&#34;,
+            &#34;userupdates&#34;,
+            &#34;reviews&#34;,
+            &#34;relations&#34;,
+            &#34;external&#34;,
+        ),
+        BASE_character_valid_entries: tuple = (
+            &#34;full&#34;,
+            &#34;anime&#34;,
+            &#34;manga&#34;,
+            &#34;voices&#34;,
+            &#34;pictures&#34;,
+        ),
+        BASE_club_valid_entries: tuple = (&#34;members&#34;, &#34;staff&#34;, &#34;relations&#34;),
+        BASE_people_valid_entries: tuple = (
+            &#34;full&#34;,
+            &#34;anime&#34;,
+            &#34;voices&#34;,
+            &#34;manga&#34;,
+            &#34;pictures&#34;,
+        ),
+        BASE_producer_valid_entries: tuple = (&#34;full&#34;, &#34;external&#34;),
+        BASE_random_valid_entries: tuple = (
+            &#34;anime&#34;,
+            &#34;manga&#34;,
+            &#34;characters&#34;,
+            &#34;people&#34;,
+            &#34;users&#34;,
+        ),
+        BASE_user_valid_entries: tuple = (
+            &#34;full&#34;,
+            &#34;statistics&#34;,
+            &#34;favorites&#34;,
+            &#34;userupdates&#34;,
+            &#34;about&#34;,
+            &#34;history&#34;,
+            &#34;friends&#34;,
+            &#34;reviews&#34;,
+            &#34;recommendations&#34;,
+            &#34;clubs&#34;,
+            &#34;external&#34;,
+        ),
+    ):
+        self.api = BASE_API
+        self.stable_hit = BASE_STABLE_HIT
+        self.constant_hit = BASE_CONSTANT_HIT
+        self.simulate_hit = BASE_SIMULATE_HIT
+        self.expire_cache = BASE_EXPIRE_CACHE
+        self.sqlite_backend = BASE_SQLITE_BACKEND
+        self.headers = BASE_headers
+        self.anime_valid_entries = BASE_anime_valid_entries
+        self.manga_valid_entries = BASE_manga_valid_entries
+        self.character_valid_entries = BASE_character_valid_entries
+        self.club_valid_entries = BASE_club_valid_entries
+        self.people_valid_entries = BASE_people_valid_entries
+        self.producer_valid_entries = BASE_producer_valid_entries
+        self.random_valid_entries = BASE_random_valid_entries
+        self.user_valid_entries = BASE_user_valid_entries
+
+
+BASE_URL = Api()
+
+
+def dump(parser: dict):
+    &#34;&#34;&#34;Converts the json object to a more readable object.
+
+    Parameters
+    ----------
+    parser : dict
+
+    Returns
+    -------
+    str
+        The new dictionaries with neat keys.
+    &#34;&#34;&#34;
+    return json.dumps(parser, sort_keys=True, indent=4, ensure_ascii=False)
+
+
+def resolve(b_object: dict) -&gt; dict:
+    &#34;&#34;&#34;Resolves the json object.
+
+    Parameters
+    ----------
+    b_object : dict
+
+    Returns
+    -------
+    dict
+        raw json object
+    &#34;&#34;&#34;
+    return json.loads(b_object)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="jikan4snek.base.constant.dump"><code class="name flex">
+<span>def <span class="ident">dump</span></span>(<span>parser: dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Converts the json object to a more readable object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>parser</code></strong> :&ensp;<code>dict</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>The new dictionaries with neat keys.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dump(parser: dict):
+    &#34;&#34;&#34;Converts the json object to a more readable object.
+
+    Parameters
+    ----------
+    parser : dict
+
+    Returns
+    -------
+    str
+        The new dictionaries with neat keys.
+    &#34;&#34;&#34;
+    return json.dumps(parser, sort_keys=True, indent=4, ensure_ascii=False)</code></pre>
+</details>
+</dd>
+<dt id="jikan4snek.base.constant.resolve"><code class="name flex">
+<span>def <span class="ident">resolve</span></span>(<span>b_object: dict) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Resolves the json object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>b_object</code></strong> :&ensp;<code>dict</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>raw json object</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def resolve(b_object: dict) -&gt; dict:
+    &#34;&#34;&#34;Resolves the json object.
+
+    Parameters
+    ----------
+    b_object : dict
+
+    Returns
+    -------
+    dict
+        raw json object
+    &#34;&#34;&#34;
+    return json.loads(b_object)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="jikan4snek.base.constant.Api"><code class="flex name class">
+<span>class <span class="ident">Api</span></span>
+<span>(</span><span>BASE_API='https://api.jikan.moe/v4', BASE_STABLE_HIT=False, BASE_CONSTANT_HIT=2, BASE_SIMULATE_HIT=1.3, BASE_EXPIRE_CACHE=60, BASE_SQLITE_BACKEND='jikan4snek_cache/jikan4snek', BASE_headers: dict = {'User-Agent': 'jikan4snek/v1.0.3 (https://pypi.org/project/jikan4snek);', 'From': 'hey@scathach.id'}, BASE_anime_valid_entries: tuple = ('full', 'characters', 'staff', 'episodes', 'news', 'forum', 'videos', 'videos_episodes', 'pictures', 'statistics', 'moreinfo', 'recommendations', 'userupdates', 'reviews', 'relations', 'themes', 'external', 'streaming'), BASE_manga_valid_entries: tuple = ('full', 'characters', 'news', 'forum', 'pictures', 'statistics', 'moreinfo', 'recommendations', 'userupdates', 'reviews', 'relations', 'external'), BASE_character_valid_entries: tuple = ('full', 'anime', 'manga', 'voices', 'pictures'), BASE_club_valid_entries: tuple = ('members', 'staff', 'relations'), BASE_people_valid_entries: tuple = ('full', 'anime', 'voices', 'manga', 'pictures'), BASE_producer_valid_entries: tuple = ('full', 'external'), BASE_random_valid_entries: tuple = ('anime', 'manga', 'characters', 'people', 'users'), BASE_user_valid_entries: tuple = ('full', 'statistics', 'favorites', 'userupdates', 'about', 'history', 'friends', 'reviews', 'recommendations', 'clubs', 'external'))</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Api:
+    def __init__(
+        self,
+        BASE_API=&#34;https://api.jikan.moe/v4&#34;,
+        BASE_STABLE_HIT=False,
+        BASE_CONSTANT_HIT=2,
+        BASE_SIMULATE_HIT=1.3,
+        BASE_EXPIRE_CACHE=60,
+        BASE_SQLITE_BACKEND=&#34;jikan4snek_cache/jikan4snek&#34;,
+        BASE_headers: dict = {
+            &#34;User-Agent&#34;: f&#34;jikan4snek/v{__version__} (https://pypi.org/project/jikan4snek);&#34;,
+            &#34;From&#34;: &#34;hey@scathach.id&#34;,
+        },
+        BASE_anime_valid_entries: tuple = (
+            &#34;full&#34;,
+            &#34;characters&#34;,
+            &#34;staff&#34;,
+            &#34;episodes&#34;,
+            &#34;news&#34;,
+            &#34;forum&#34;,
+            &#34;videos&#34;,
+            &#34;videos_episodes&#34;,
+            &#34;pictures&#34;,
+            &#34;statistics&#34;,
+            &#34;moreinfo&#34;,
+            &#34;recommendations&#34;,
+            &#34;userupdates&#34;,
+            &#34;reviews&#34;,
+            &#34;relations&#34;,
+            &#34;themes&#34;,
+            &#34;external&#34;,
+            &#34;streaming&#34;,
+        ),
+        BASE_manga_valid_entries: tuple = (
+            &#34;full&#34;,
+            &#34;characters&#34;,
+            &#34;news&#34;,
+            &#34;forum&#34;,
+            &#34;pictures&#34;,
+            &#34;statistics&#34;,
+            &#34;moreinfo&#34;,
+            &#34;recommendations&#34;,
+            &#34;userupdates&#34;,
+            &#34;reviews&#34;,
+            &#34;relations&#34;,
+            &#34;external&#34;,
+        ),
+        BASE_character_valid_entries: tuple = (
+            &#34;full&#34;,
+            &#34;anime&#34;,
+            &#34;manga&#34;,
+            &#34;voices&#34;,
+            &#34;pictures&#34;,
+        ),
+        BASE_club_valid_entries: tuple = (&#34;members&#34;, &#34;staff&#34;, &#34;relations&#34;),
+        BASE_people_valid_entries: tuple = (
+            &#34;full&#34;,
+            &#34;anime&#34;,
+            &#34;voices&#34;,
+            &#34;manga&#34;,
+            &#34;pictures&#34;,
+        ),
+        BASE_producer_valid_entries: tuple = (&#34;full&#34;, &#34;external&#34;),
+        BASE_random_valid_entries: tuple = (
+            &#34;anime&#34;,
+            &#34;manga&#34;,
+            &#34;characters&#34;,
+            &#34;people&#34;,
+            &#34;users&#34;,
+        ),
+        BASE_user_valid_entries: tuple = (
+            &#34;full&#34;,
+            &#34;statistics&#34;,
+            &#34;favorites&#34;,
+            &#34;userupdates&#34;,
+            &#34;about&#34;,
+            &#34;history&#34;,
+            &#34;friends&#34;,
+            &#34;reviews&#34;,
+            &#34;recommendations&#34;,
+            &#34;clubs&#34;,
+            &#34;external&#34;,
+        ),
+    ):
+        self.api = BASE_API
+        self.stable_hit = BASE_STABLE_HIT
+        self.constant_hit = BASE_CONSTANT_HIT
+        self.simulate_hit = BASE_SIMULATE_HIT
+        self.expire_cache = BASE_EXPIRE_CACHE
+        self.sqlite_backend = BASE_SQLITE_BACKEND
+        self.headers = BASE_headers
+        self.anime_valid_entries = BASE_anime_valid_entries
+        self.manga_valid_entries = BASE_manga_valid_entries
+        self.character_valid_entries = BASE_character_valid_entries
+        self.club_valid_entries = BASE_club_valid_entries
+        self.people_valid_entries = BASE_people_valid_entries
+        self.producer_valid_entries = BASE_producer_valid_entries
+        self.random_valid_entries = BASE_random_valid_entries
+        self.user_valid_entries = BASE_user_valid_entries</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="jikan4snek.base" href="index.html">jikan4snek.base</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="jikan4snek.base.constant.dump" href="#jikan4snek.base.constant.dump">dump</a></code></li>
+<li><code><a title="jikan4snek.base.constant.resolve" href="#jikan4snek.base.constant.resolve">resolve</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="jikan4snek.base.constant.Api" href="#jikan4snek.base.constant.Api">Api</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
