@@ -1,0 +1,46 @@
+name: Test get requests
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python setup.py install
+
+      - name: anime test
+        run: python test/tests.py -get_anime
+
+      - name: manga test
+        run: python test/tests.py -get_manga
+
+      - name: clubs test
+        run: python test/tests.py -get_clubs
+
+      - name: character test
+        run: python test/tests.py -get_characters
+
+      - name: people test
+        run: python test/tests.py -get_people
+
+      - name: producers test
+        run: python test/tests.py -get_producers
+
+      - name: random test
+        run: python test/tests.py -get_random
+
+      - name: users test
+        run: python test/tests.py -get_users

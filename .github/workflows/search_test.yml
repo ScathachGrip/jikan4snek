@@ -1,0 +1,46 @@
+name: Test search requests
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python setup.py install
+
+      - name: search anime test
+        run: python test/tests.py -search_anime
+
+      - name: search manga test
+        run: python test/tests.py -search_manga
+
+      - name: search characters test
+        run: python test/tests.py -search_characters
+
+      - name: search clubs test
+        run: python test/tests.py -search_clubs
+
+      - name: search people test
+        run: python test/tests.py -search_people
+
+      - name: search producers test
+        run: python test/tests.py -search_producers
+
+      - name: search magazines test
+        run: python test/tests.py -search_magazines
+
+      - name: search users test
+        run: python test/tests.py -search_users
