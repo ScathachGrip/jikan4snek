@@ -1,0 +1,2 @@
+aiohttp-client-cache>=0.7.3
+aiosqlite>=0.17.0
