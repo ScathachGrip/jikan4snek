@@ -1,5 +1,5 @@
 <div align="center">
-<a href="https://scathachgrip.github.io/jikan4snek4snek"><img width="600" src="https://cdn.discordapp.com/attachments/1046495201176334467/1053659151869415444/jikan4snek.png" alt="jikan4snek"></a>
+<a href="https://scathachgrip.github.io/jikan4snek"><img width="600" src="https://cdn.discordapp.com/attachments/1046495201176334467/1053659151869415444/jikan4snek.png" alt="jikan4snek"></a>
 
 <h4 align="center">Python client for Jikan.moe, simplified with amplified in mind.</h4>
 <p align="center">
@@ -18,7 +18,7 @@ Jikan4snek simulating the requests with saved cache and apply coroutine delay if
 
 ---
 
-<a href="https://scathachgrip.github.io/jikan4snek4snek"><img align="right" src="https://cdn.discordapp.com/attachments/1046495201176334467/1053659152360157264/snekwaifu.png" width="430"></a>
+<a href="https://scathachgrip.github.io/jikan4snek"><img align="right" src="https://cdn.discordapp.com/attachments/1046495201176334467/1053659152360157264/snekwaifu.png" width="430"></a>
 
 - [Jikan4snek](#features)
   - [Features](#features)
@@ -31,7 +31,7 @@ Jikan4snek simulating the requests with saved cache and apply coroutine delay if
     - [Running tests](#running-tests)
     - [Jikan4snek.dump](#jikan4snekdump)
   - [Documentation](#documentation)
-    - [Jikan4snek](https://scathachgrip.github.io/jikan4snek4snek)
+    - [Jikan4snek](https://scathachgrip.github.io/jikan4snek)
     - [Jikan.moe documentation](https://docs.api.jikan.moe/)
   - [Acknowledgments](#acknowledgments)
   - [Pronunciation](#Pronunciation)
@@ -257,7 +257,7 @@ Check workflows and the whole `/test` folder.
 Short hand of [json.dump()](https://docs.python.org/3/library/json.html#json.dumps) If you are phobia with arbitrary bad indentation of json, use `Jikan4snek.dump()` to dump them, It's definitely str, not dictionaries, just in case for reading object to save your time.
 
 ## Documentation
-https://scathachgrip.github.io/jikan4snek4snek
+https://scathachgrip.github.io/jikan4snek
 
 ## Acknowledgements
 I hope you have found this project useful. All the major credit really goes to the [Jikan](https://jikan.moe) and [MyAnimeList](https://myanimelist.net) itself.
