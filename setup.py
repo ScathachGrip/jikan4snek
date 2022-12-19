@@ -51,7 +51,7 @@ setup(
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Software Development :: Libraries"
     ],
-    description="Python client for Jikan.moe, MyAnimeList's unofficial API",
+    description="Python client for Jikan.moe, MyAnimeList unofficial API built on good intentions.",
     include_package_data=True,
     keywords=[
         "jikan",
