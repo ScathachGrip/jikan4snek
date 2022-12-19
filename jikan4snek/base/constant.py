@@ -1,12 +1,16 @@
 import json
+import re
 from jikan4snek import __version__
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)s | %(funcName)s:%(module)s | %(message)s')
 
 
 class Api:
     def __init__(
         self,
         BASE_API="https://api.jikan.moe/v4",
-        BASE_STABLE_HIT=False,
+        BASE_STRICT_DELAY=False,
+        BASE_DEBUG=False,
         BASE_CONSTANT_HIT=2,
         BASE_SIMULATE_HIT=1.3,
         BASE_EXPIRE_CACHE=60,
@@ -87,7 +91,8 @@ class Api:
         ),
     ):
         self.api = BASE_API
-        self.stable_hit = BASE_STABLE_HIT
+        self.strict_delay = BASE_STRICT_DELAY
+        self.debug = BASE_DEBUG
         self.constant_hit = BASE_CONSTANT_HIT
         self.simulate_hit = BASE_SIMULATE_HIT
         self.expire_cache = BASE_EXPIRE_CACHE
@@ -134,3 +139,10 @@ def resolve(b_object: dict) -> dict:
         raw json object
     """
     return json.loads(b_object)
+
+def rm_slash(url: str) -> str:
+    return re.sub(r"(?<!:)/{2,}", "/", url)
+
+def logs(info: str) -> None:
+    return logging.info(info)
+

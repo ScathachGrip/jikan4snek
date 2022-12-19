@@ -22,6 +22,8 @@ class Jikan4SNEK(object):
     expire_cache : int
         Purge the whole cache after x minutes. Default is 60 minutes.
         PS: Your cache will never purged if you dont have any process running.
+    debug : bool
+        Enable to debug ratelimit hit. Default is False.
     """
 
     def __init__(
@@ -30,12 +32,14 @@ class Jikan4SNEK(object):
         api: str = Jikan.api,
         sqlite_backend: str = Jikan.sqlite_backend,
         expire_cache: int = Jikan.expire_cache,
+        debug: bool = False,
     ):
 
         self.ua = ua
         self.api = api
         self.sqlite_backend = sqlite_backend
         self.expire_cache = expire_cache
+        self.debug = debug
 
     @staticmethod
     async def fetch_aiosequel(
@@ -61,6 +65,7 @@ class Jikan4SNEK(object):
             api=self.api,
             sqlite_backend=self.sqlite_backend,
             expire_cache=self.expire_cache,
+            debug=self.debug,
             ua=self.user_agent,
             someid=self.id,
             path=path,
@@ -121,6 +126,7 @@ class JikanResponseFromId:
         self.user_agent = raw_.ua
         self.sqlite_backend = raw_.sqlite_backend
         self.expire_cache = raw_.expire_cache
+        self.debug = raw_.debug
         ##print(self.id, self.raw)
 
     async def anime(self):
@@ -281,6 +287,8 @@ class JikanResponseFromSearch:
         self.user_agent = raw_.ua
         self.sqlite_backend = raw_.sqlite_backend
         self.expire_cache = raw_.expire_cache
+        self.debug = raw_.debug
+
         ##print(self.__dict__)
 
     async def anime(self):

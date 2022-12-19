@@ -1,10 +1,11 @@
+import time
+import logging
 from asyncio import sleep
 from aiohttp_client_cache import CachedSession, SQLiteBackend
 from typing import Union
-from .constant import Api
+from .constant import Api, rm_slash
 
 Jikan = Api()
-
 api_hit = []
 
 
@@ -17,6 +18,7 @@ async def request(
     ua: dict = Jikan.headers,
     sqlite_backend: str = Jikan.sqlite_backend,
     expire_cache: int = Jikan.expire_cache,
+    debug: bool = Jikan.debug,
 ) -> Union[dict, None]:
     """Request to the API or fetch from cache.
 
@@ -59,13 +61,22 @@ async def request(
     else:
         endpoint = f"{path}/{someid}/{entry}/{eps}"
 
+    start_fetch = time.time()
     async with CachedSession(cache=sequel_cfg) as session:
+        async with session.get(f"{api}/{rm_slash(endpoint)}", headers=ua) as resp:
+            simulate_time = time.time() - start_fetch
+            simulate_time = round(simulate_time, 2)
 
-        async with session.get(f"{api}/{endpoint}", headers=ua) as resp:
-            ## print(resp.url)
+            if debug:
+                logging.info(
+                    f"Cache:{resp.from_cache} | Status:{resp.status} | {resp.url}"
+                )
+                logging.info(
+                    f"Add delay hit depends on your internet, took {simulate_time} sec."
+                )
 
             try:
-                if Jikan.stable_hit:
+                if Jikan.strict_delay:
                     if resp.from_cache:
                         res = await resp.json()
                         return res
@@ -76,10 +87,14 @@ async def request(
 
                 else:
                     if resp.from_cache:
+                        if debug:
+                            logging.info(f"Not hitting the API, using cache")
                         res = await resp.json()
                         return res
 
                     elif resp.from_cache is False and len(api_hit) < 3:
+                        if debug:
+                            logging.info(f"API hit {len(api_hit) + 1}")
                         api_hit.append(1)
                         res = await resp.json()
                         await sleep(Jikan.simulate_hit)
@@ -87,6 +102,10 @@ async def request(
                         return res
 
                     else:
+                        if debug:
+                            logging.info(
+                                f"API hit exceeded 3, Reseting hit to 1 and add delay"
+                            )
                         api_hit.clear()
                         api_hit.append(1)
                         res = await resp.json()
@@ -96,5 +115,5 @@ async def request(
 
             except Exception as e:
                 raise Exception(
-                    f"{resp.status} | failed to get data from: {path} with: {someid} due to: {e}"
+                    f"Failed to get data from: {path} with: {someid} due to: {e}"
                 )

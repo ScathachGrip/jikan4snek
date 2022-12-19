@@ -29,13 +29,13 @@ Jikan4snek simulating the requests with saved cache and apply coroutine delay if
       - [Search](#search)
     - [Constructors](#constructors)
     - [Running tests](#running-tests)
+  - [Debug](#debug)
     - [Jikan4snek.dump](#jikan4snekdump)
   - [Documentation](#documentation)
     - [Jikan4snek](https://scathachgrip.github.io/jikan4snek)
     - [Jikan.moe documentation](https://docs.api.jikan.moe/)
   - [Acknowledgments](#acknowledgments)
   - [Pronunciation](#Pronunciation)
-  - [MyAnimeList TOS](https://myanimelist.net/membership/terms_of_use)
   - [Legal](#legal)
 
 
@@ -76,7 +76,7 @@ asyncio.run(main())
 ```
 
 ### Constructors
-You can apply your own instance of [Jikan](https://github.com/jikan-me/jikan-rest), user-agent, sqlite backend, and cache expiration time on the constructor.
+You can apply your own instance of [Jikan](https://github.com/jikan-me/jikan-rest), user-agent, sqlite backend, and cache expiration, and debug on the constructor.
 
 The default:
 ```py
@@ -87,14 +87,15 @@ async def main():
     jikan = Jikan4SNEK(
         api="https://api.jikan.moe/v4",
         ua={
-            "User-Agent": f"jikan4snek/{__version__}",
+            "User-Agent": "jikan4snek/current_version",
             "From": "hey@scathach.id",
         },
         sqlite_backend="jikan4snek_cache/jikan4snek",
         expire_cache=60, ## 1 hour
+        debug=False ## debug mode, default is False
     )
-    anime = await jikan.search("naruto").anime()
-    print(anime)
+    some_anime = await jikan.search("naruto").anime()
+    ## do with some_anime
 
 asyncio.run(main())
 ```
@@ -252,6 +253,14 @@ await jikan.search("sin", limit=10, page=1).users()
 
 ### Running tests
 Check workflows and the whole `/test` folder.
+
+## Debug
+Enable debug ratelimit hit. Default is False. Use this if jikan4snek request is not working as expected.  
+```py
+jikan = Jikan4SNEK(debug=True)
+```
+
+<img src="https://cdn.discordapp.com/attachments/1046495201176334467/1054231070616342558/SNEKLOGGG_1.png" width="600" alt="sneklog">  
 
 ### Jikan4snek.dump
 Short hand of [json.dump()](https://docs.python.org/3/library/json.html#json.dumps) If you are phobia with arbitrary bad indentation of json, use `Jikan4snek.dump()` to dump them, It's definitely str, not dictionaries, just in case for reading object to save your time.
