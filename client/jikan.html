@@ -50,6 +50,8 @@ class Jikan4SNEK(object):
     expire_cache : int
         Purge the whole cache after x minutes. Default is 60 minutes.
         PS: Your cache will never purged if you dont have any process running.
+    debug : bool
+        Enable to debug ratelimit hit. Default is False.
     &#34;&#34;&#34;
 
     def __init__(
@@ -58,12 +60,14 @@ class Jikan4SNEK(object):
         api: str = Jikan.api,
         sqlite_backend: str = Jikan.sqlite_backend,
         expire_cache: int = Jikan.expire_cache,
+        debug: bool = False,
     ):
 
         self.ua = ua
         self.api = api
         self.sqlite_backend = sqlite_backend
         self.expire_cache = expire_cache
+        self.debug = debug
 
     @staticmethod
     async def fetch_aiosequel(
@@ -89,6 +93,7 @@ class Jikan4SNEK(object):
             api=self.api,
             sqlite_backend=self.sqlite_backend,
             expire_cache=self.expire_cache,
+            debug=self.debug,
             ua=self.user_agent,
             someid=self.id,
             path=path,
@@ -149,6 +154,7 @@ class JikanResponseFromId:
         self.user_agent = raw_.ua
         self.sqlite_backend = raw_.sqlite_backend
         self.expire_cache = raw_.expire_cache
+        self.debug = raw_.debug
         ##print(self.id, self.raw)
 
     async def anime(self):
@@ -309,6 +315,8 @@ class JikanResponseFromSearch:
         self.user_agent = raw_.ua
         self.sqlite_backend = raw_.sqlite_backend
         self.expire_cache = raw_.expire_cache
+        self.debug = raw_.debug
+
         ##print(self.__dict__)
 
     async def anime(self):
@@ -419,7 +427,7 @@ class JikanResponseFromSearch:
 <dl>
 <dt id="jikan4snek.client.jikan.Jikan4SNEK"><code class="flex name class">
 <span>class <span class="ident">Jikan4SNEK</span></span>
-<span>(</span><span>ua: dict = {'User-Agent': 'jikan4snek/v4.0.1 (https://pypi.org/project/jikan4snek);', 'From': 'hey@scathach.id'}, api: str = 'https://api.jikan.moe/v4', sqlite_backend: str = 'jikan4snek_cache/jikan4snek', expire_cache: int = 60)</span>
+<span>(</span><span>ua: dict = {'User-Agent': 'jikan4snek/v4.0.1 (https://pypi.org/project/jikan4snek);', 'From': 'hey@scathach.id'}, api: str = 'https://api.jikan.moe/v4', sqlite_backend: str = 'jikan4snek_cache/jikan4snek', expire_cache: int = 60, debug: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Jikan4SNEK Constructor</p>
@@ -436,6 +444,8 @@ Jikan4SNEK apply customizable: <code>api_url</code>, <code>user-agent</code>, an
 <dt><strong><code>expire_cache</code></strong> :&ensp;<code>int</code></dt>
 <dd>Purge the whole cache after x minutes. Default is 60 minutes.
 PS: Your cache will never purged if you dont have any process running.</dd>
+<dt><strong><code>debug</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Enable to debug ratelimit hit. Default is False.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -458,6 +468,8 @@ PS: Your cache will never purged if you dont have any process running.</dd>
     expire_cache : int
         Purge the whole cache after x minutes. Default is 60 minutes.
         PS: Your cache will never purged if you dont have any process running.
+    debug : bool
+        Enable to debug ratelimit hit. Default is False.
     &#34;&#34;&#34;
 
     def __init__(
@@ -466,12 +478,14 @@ PS: Your cache will never purged if you dont have any process running.</dd>
         api: str = Jikan.api,
         sqlite_backend: str = Jikan.sqlite_backend,
         expire_cache: int = Jikan.expire_cache,
+        debug: bool = False,
     ):
 
         self.ua = ua
         self.api = api
         self.sqlite_backend = sqlite_backend
         self.expire_cache = expire_cache
+        self.debug = debug
 
     @staticmethod
     async def fetch_aiosequel(
@@ -497,6 +511,7 @@ PS: Your cache will never purged if you dont have any process running.</dd>
             api=self.api,
             sqlite_backend=self.sqlite_backend,
             expire_cache=self.expire_cache,
+            debug=self.debug,
             ua=self.user_agent,
             someid=self.id,
             path=path,
@@ -594,6 +609,7 @@ async def fetch_aiosequel(
         api=self.api,
         sqlite_backend=self.sqlite_backend,
         expire_cache=self.expire_cache,
+        debug=self.debug,
         ua=self.user_agent,
         someid=self.id,
         path=path,
@@ -707,6 +723,7 @@ async def fetch_aiosequel(
         self.user_agent = raw_.ua
         self.sqlite_backend = raw_.sqlite_backend
         self.expire_cache = raw_.expire_cache
+        self.debug = raw_.debug
         ##print(self.id, self.raw)
 
     async def anime(self):
@@ -1167,6 +1184,8 @@ async def fetch_aiosequel(
         self.user_agent = raw_.ua
         self.sqlite_backend = raw_.sqlite_backend
         self.expire_cache = raw_.expire_cache
+        self.debug = raw_.debug
+
         ##print(self.__dict__)
 
     async def anime(self):
