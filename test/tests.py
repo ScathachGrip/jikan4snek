@@ -42,7 +42,7 @@ class Client(object):
 
 
 Base = Client()
-Jikan = jikan4snek.Jikan4SNEK()
+Jikan = jikan4snek.Jikan4SNEK(debug=True)
 
 async def fetch():
     start = time.time()
