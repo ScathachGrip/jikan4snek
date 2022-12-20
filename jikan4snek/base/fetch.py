@@ -1,9 +1,9 @@
 import time
 import logging
-from asyncio import sleep
+import asyncio
 from aiohttp_client_cache import CachedSession, SQLiteBackend
 from typing import Union
-from .constant import Api, rm_slash
+from .constant import Api, rm_slash, fetch_hit
 
 Jikan = Api()
 api_hit = []
@@ -54,7 +54,7 @@ async def request(
         urls_expire_after={"*/random": 0},
     )
 
-    ## if someid has "?q=" then it's a search
+    # if someid has "?q=" then it's a search
     if "?q=" in str(path):
         endpoint = f"{path}"
 
@@ -64,56 +64,62 @@ async def request(
     start_fetch = time.time()
     async with CachedSession(cache=sequel_cfg) as session:
         async with session.get(f"{api}/{rm_slash(endpoint)}", headers=ua) as resp:
-            simulate_time = time.time() - start_fetch
-            simulate_time = round(simulate_time, 2)
+            time_took = time.time() - start_fetch
+            time_took = round(time_took, 3)
+            if resp.from_cache:
+                if debug:
+                    logging.info(f"Not hitting API, cache is available")
+                    logging.info(
+                        f"is_cache:{resp.from_cache} | status_code:{resp.status} | url:{resp.url} | took:{time_took} seconds")
 
-            if debug:
-                logging.info(
-                    f"Cache:{resp.from_cache} | Status:{resp.status} | {resp.url}"
-                )
-                logging.info(
-                    f"Add delay hit depends on your internet, took {simulate_time} sec."
-                )
+                return await resp.json()
 
-            try:
-                if Jikan.strict_delay:
-                    if resp.from_cache:
-                        res = await resp.json()
-                        return res
-                    else:
-                        res = await resp.json()
-                        await sleep(Jikan.constant_hit)
-                        return res
+            else:
+                if len(api_hit) == 0:
+                    api_hit.append(1)
+                    if debug:
+                        logging.info(
+                            f"First conditions of request, API hit {len(api_hit)}")
+                        logging.info(
+                            f"is_cache:{resp.from_cache} | status_code:{resp.status} | url:{resp.url} | took:{time_took} seconds")
+
+                    return await resp.json()
+
+                elif len(api_hit) <= 1:
+                    api_hit.append(1)
+                    if debug:
+                        logging.info(
+                            f"Second conditions of request, API hit {len(api_hit)}")
+
+                    api = await fetch_hit(
+                        cache=sequel_cfg,
+                        endpoint=f"{api}/{rm_slash(endpoint)}",
+                        headers=ua,
+                    )
+
+                    if debug:
+                        logging.info(
+                            f"is_cache:{api['cache']} | status_code:{api['status']} | url:{api['url']} | took:{api['took']} seconds")
+                    return api["reparse"]
 
                 else:
-                    if resp.from_cache:
-                        if debug:
-                            logging.info(f"Not hitting the API, using cache")
-                        res = await resp.json()
-                        return res
+                    api_hit.clear()
+                    if debug:
+                        logging.info(
+                            f"Third conditions of request, apply sleep for {Jikan.constant_hit} seconds..")
+                    await asyncio.sleep(Jikan.constant_hit)
+                    api_hit.append(1)
+                    if debug:
+                        logging.info(
+                            f"Third should back to first condtions, API hit {len(api_hit)}")
 
-                    elif resp.from_cache is False and len(api_hit) < 3:
-                        if debug:
-                            logging.info(f"API hit {len(api_hit) + 1}")
-                        api_hit.append(1)
-                        res = await resp.json()
-                        await sleep(Jikan.simulate_hit)
-                        ## print(f"ratelimit hit 1: {len(api_hit)}")
-                        return res
+                    api = await fetch_hit(
+                        cache=sequel_cfg,
+                        endpoint=f"{api}/{rm_slash(endpoint)}",
+                        headers=ua,
+                    )
+                    if debug:
+                        logging.info(
+                            f"is_cache:{api['cache']} | status_code:{api['status']} | url:{api['url']} | took:{api['took']} seconds")
 
-                    else:
-                        if debug:
-                            logging.info(
-                                f"API hit exceeded 3, Reseting hit to 1 and add delay"
-                            )
-                        api_hit.clear()
-                        api_hit.append(1)
-                        res = await resp.json()
-                        await sleep(1)
-                        ## print(f"ratelimit hit 2: {len(api_hit)}")
-                        return res
-
-            except Exception as e:
-                raise Exception(
-                    f"Failed to get data from: {path} with: {someid} due to: {e}"
-                )
+                    return api["reparse"]

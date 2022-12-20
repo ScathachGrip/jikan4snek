@@ -3,16 +3,17 @@
 
 <h4 align="center">Python client for Jikan.moe, simplified with amplified in mind.</h4>
 <p align="center">
-	<a href="https://github.com/ScathachGrip/jikan4snek/actions/workflows/request_sequentially.yml"><img src="https://github.com/ScathachGrip/jikan4snek/workflows/Request%20Sequentially/badge.svg"></a>
+	<a href="https://github.com/ScathachGrip/jikan4snek/actions/workflows/get_test.yml"><img src="https://github.com/ScathachGrip/jikan4snek/workflows/Test%20get/badge.svg"></a>
+  	<a href="https://github.com/ScathachGrip/jikan4snek/actions/workflows/search_test.yml"><img src="https://github.com/ScathachGrip/jikan4snek/workflows/Test%20search/badge.svg"></a>
 	<a href="https://codeclimate.com/github/ScathachGrip/jikan4snek/maintainability"><img src="https://api.codeclimate.com/v1/badges/1318c78a4b9911edf844/maintainability" /></a>
 </p>
 
  
 The motivation is simplified the api call, customizable behaviour, and user should have no worries with ratelimit.  
-Jikan4snek simulating the requests with saved cache and apply coroutine delay if cache was expired.
+Jikan4snek simulating requests with cache and apply coroutine delay if ratelimit was hit or it's expired.
 
 <a href="https://github.com/ScathachGrip/jikan4snek/blob/master/CONTRIBUTING.md">Contributing</a> •
-<a href="https://github.com/ScathachGrip/jikan4snek/wiki/Routing">Documentation</a> •
+<a href="https://scathachgrip.github.io/jikan4snek">Documentation</a> •
 <a href="https://github.com/ScathachGrip/jikan4snek/issues/new/choose">Report Issues</a>
 </div>
 
@@ -27,6 +28,7 @@ Jikan4snek simulating the requests with saved cache and apply coroutine delay if
     - [Usage](#usage)
       - [Get](#get)
       - [Search](#search)
+      - [Bulk-request](#bulk-request)
     - [Constructors](#constructors)
     - [Running tests](#running-tests)
   - [Debug](#debug)
@@ -76,7 +78,7 @@ asyncio.run(main())
 ```
 
 ### Constructors
-You can apply your own instance of [Jikan](https://github.com/jikan-me/jikan-rest), user-agent, sqlite backend, and cache expiration, and debug on the constructor.
+You can apply your own instance of [Jikan](https://github.com/jikan-me/jikan-rest), user-agent, sqlite backend, cache expiration, and debug.
 
 The default:
 ```py
@@ -251,19 +253,67 @@ await jikan.search("sin", limit=10, page=1).users()
 ```
 </details>
 
+### Bulk request
+If you using `asyncio.gather(*[jikan.get("..").anime()])` sadly, It will broke the base api hit, Just do it like usual, enable debug, and snek will handle the ratelimit for you. For example:
+
+```py
+import asyncio
+import jikan4snek
+
+some_bunch_of_anime = [
+    44511, 50602, 50172, 49918, 49596, 41467, 
+    48316, 49709, 42962, 47917, 49891, 50425, 
+    50710, 49784, 51098, 49979, 52046, 52193, 
+    51128, 48542, 49828, 51403, 50205, 50528, 
+    50590, 51212, 30455, 50923, 50348, 51680]
+
+async def main():
+    Jikan = jikan4snek.Jikan4SNEK(debug=True)
+    for i in some_bunch_of_anime:
+        res = await Jikan.get(i).anime()
+        print("Anime:", res['data']['title'])
+
+asyncio.run(main())
+```
+
 ### Running tests
 Check workflows and the whole `/test` folder.
 
 ## Debug
-Enable debug ratelimit hit. Default is False. Use this if jikan4snek request is not working as expected.  
+Enable debug. Default is False. Use this if jikan4snek request is not working as expected.  
 ```py
 jikan = Jikan4SNEK(debug=True)
 ```
 
-<img src="https://cdn.discordapp.com/attachments/1046495201176334467/1054231070616342558/SNEKLOGGG_1.png" width="600" alt="sneklog">  
+```
+2022-12-20 21:02:06,435 | INFO | request:fetch | Not hitting API, cache is available
+2022-12-20 21:02:06,435 | INFO | request:fetch | is_cache:True | status_code:200 | url:https://api.jikan.moe/v4/anime/44511 | took:0.02 seconds
+2022-12-20 21:02:06,435 | INFO | main:memek | Anime: Chainsaw Man
+2022-12-20 21:02:06,435 | INFO | request:fetch | Not hitting API, cache is available
+2022-12-20 21:02:06,435 | INFO | request:fetch | is_cache:True | status_code:200 | url:https://api.jikan.moe/v4/anime/50602 | took:0.0 seconds
+2022-12-20 21:02:06,435 | INFO | main:memek | Anime: Spy x Family Part 2
+2022-12-20 21:02:06,435 | INFO | request:fetch | Not hitting API, cache is available
+2022-12-20 21:02:06,435 | INFO | request:fetch | is_cache:True | status_code:200 | url:https://api.jikan.moe/v4/anime/50172 | took:0.0 seconds
+2022-12-20 21:02:06,435 | INFO | main:memek | Anime: Mob Psycho 100 III
+2022-12-20 21:02:07,997 | INFO | request:fetch | First conditions of request, API hit 1
+2022-12-20 21:02:07,997 | INFO | request:fetch | is_cache:False | status_code:200 | url:https://api.jikan.moe/v4/anime/49918 | took:1.56 seconds
+2022-12-20 21:02:07,997 | INFO | main:memek | Anime: Boku no Hero Academia 6th Season
+2022-12-20 21:02:09,560 | INFO | request:fetch | Second conditions of request, API hit 2
+2022-12-20 21:02:09,576 | INFO | request:fetch | is_cache:False | status_code:200 | url:https://api.jikan.moe/v4/anime/49596 | took:0.016 seconds
+2022-12-20 21:02:09,576 | INFO | main:memek | Anime: Blue Lock
+2022-12-20 21:02:11,122 | INFO | request:fetch | Third conditions of request, apply sleep for 1 seconds..
+2022-12-20 21:02:12,123 | INFO | request:fetch | Third should back to first condtions, API hit 1
+2022-12-20 21:02:12,154 | INFO | request:fetch | is_cache:False | status_code:200 | url:https://api.jikan.moe/v4/anime/41467 | took:0.031 seconds
+2022-12-20 21:02:12,154 | INFO | main:memek | Anime: Bleach: Sennen Kessen-hen
+2022-12-20 21:02:13,716 | INFO | request:fetch | Second conditions of request, API hit 2
+2022-12-20 21:02:13,732 | INFO | request:fetch | is_cache:False | status_code:200 | url:https://api.jikan.moe/v4/anime/48316 | took:0.016 seconds
+2022-12-20 21:02:13,732 | INFO | main:memek | Anime: Kage no Jitsuryokusha ni Naritakute!
+2022-12-20 21:02:15,247 | INFO | request:fetch | Third conditions of request, apply sleep for 1 seconds..
+2022-12-20 21:02:16,247 | INFO | request:fetch | Third should back to first condtions, API hit 1
+```
 
 ### Jikan4snek.dump
-Short hand of [json.dump()](https://docs.python.org/3/library/json.html#json.dumps) If you are phobia with arbitrary bad indentation of json, use `Jikan4snek.dump()` to dump them, It's definitely str, not dictionaries, just in case for reading object to save your time.
+Short hand of [json.dump()](https://docs.python.org/3/library/json.html#json.dumps) If you are phobia with arbitrary bad indentation of json. Use `Jikan4snek.dump()` to dump them, It's definitely str, not dictionaries, just in case for reading object to save your time.
 
 ## Documentation
 https://scathachgrip.github.io/jikan4snek

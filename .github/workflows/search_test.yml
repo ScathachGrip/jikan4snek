@@ -1,4 +1,4 @@
-name: Test search requests
+name: Test search
 on:
   push:
     branches:
