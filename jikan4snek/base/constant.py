@@ -1,8 +1,11 @@
 import json
 import re
-from jikan4snek import __version__
+import time
 import logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)s | %(funcName)s:%(module)s | %(message)s')
+from jikan4snek import __version__
+from aiohttp_client_cache import CachedSession
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s | %(levelname)s | %(funcName)s:%(module)s | %(message)s')
 
 
 class Api:
@@ -12,7 +15,6 @@ class Api:
         BASE_STRICT_DELAY=False,
         BASE_DEBUG=False,
         BASE_CONSTANT_HIT=2,
-        BASE_SIMULATE_HIT=1.3,
         BASE_EXPIRE_CACHE=60,
         BASE_SQLITE_BACKEND="jikan4snek_cache/jikan4snek",
         BASE_headers: dict = {
@@ -94,7 +96,6 @@ class Api:
         self.strict_delay = BASE_STRICT_DELAY
         self.debug = BASE_DEBUG
         self.constant_hit = BASE_CONSTANT_HIT
-        self.simulate_hit = BASE_SIMULATE_HIT
         self.expire_cache = BASE_EXPIRE_CACHE
         self.sqlite_backend = BASE_SQLITE_BACKEND
         self.headers = BASE_headers
@@ -140,9 +141,54 @@ def resolve(b_object: dict) -> dict:
     """
     return json.loads(b_object)
 
+
 def rm_slash(url: str) -> str:
+    """Removes multiple slash from the url.
+
+    Parameters
+    ----------
+    url : str
+        Some url with multiple slash.
+
+    Returns
+    -------
+    str
+        The url with only one slash.
+    """
     return re.sub(r"(?<!:)/{2,}", "/", url)
 
-def logs(info: str) -> None:
-    return logging.info(info)
 
+async def fetch_hit(cache, endpoint, headers) -> dict:
+    """Fetches the data from the endpoint.
+
+    Parameters
+    ----------
+    cache : CacheBackend
+        SQLite cache backend.
+    endpoint : str
+        The jikan endpoint.
+    headers : dict
+        The headers for the request.
+
+    Returns
+    -------
+    dict
+        The data, status code, and url.
+    """
+    start_fetch = time.time()
+    async with CachedSession(cache=cache) as session_hit:
+        async with session_hit.get(endpoint, headers=headers) as resp_hit:
+            time_took = time.time() - start_fetch
+            time_took = round(time_took, 3)
+
+            data = await resp_hit.json()
+            status = resp_hit.status
+            url = resp_hit.url
+
+            return {
+                "reparse": data,
+                "status": status,
+                "url": url,
+                "cache": False,
+                "took": time_took
+            }

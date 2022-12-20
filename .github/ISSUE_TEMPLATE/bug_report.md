@@ -18,7 +18,7 @@ A clear and concise description of what you expected to happen.
 
 **Desktop (please complete the following information):**
  - Python version
- - Use default jikan api or not
+ - Use default jikan url api or not
 
 **Additional context**
 Add any other context about the problem here.
